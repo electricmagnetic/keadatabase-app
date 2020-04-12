@@ -1,13 +1,24 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import TabBarIcon from '../components/presentation/TabBarIcon';
+import GridTilesScreen from '../screens/GridTilesScreen';
+import MenuScreen from '../screens/MenuScreen';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+const INITIAL_ROUTE_NAME = 'Grid Tiles';
 
-export default function BottomTabNavigator({ navigation, route }) {
+function getHeaderTitle(route) {
+  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+
+  switch (routeName) {
+    case 'Grid Tiles':
+      return 'Grid Tiles';
+    case 'Menu':
+      return 'Main Menu';
+  }
+}
+
+const BottomTabNavigator = ({ navigation, route }) => {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
@@ -16,32 +27,23 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Grid Tiles"
+        component={GridTilesScreen}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Grid Tiles',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map" />,
         }}
       />
       <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+        name="Menu"
+        component={MenuScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Menu',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
         }}
       />
     </BottomTab.Navigator>
   );
-}
+};
 
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-  }
-}
+export default BottomTabNavigator;

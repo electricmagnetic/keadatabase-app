@@ -11,7 +11,7 @@ import useLinking from './navigation/useLinking';
 
 const Stack = createStackNavigator();
 
-export default function App(props) {
+const App = (props) => {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
@@ -29,7 +29,7 @@ export default function App(props) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          'zilla-slab': require('./assets/fonts/ZillaSlab-SemiBold.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -57,7 +57,7 @@ export default function App(props) {
       </View>
     );
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -65,3 +65,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+export default App;
