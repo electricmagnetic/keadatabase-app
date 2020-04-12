@@ -14,7 +14,7 @@ const LOCATION_SETTINGS = {
   timeInterval: 30000,
   distanceInterval: 10,
 };
-// const LOCATION_OPTIONS = {
+// const LOCATION_SETTINGS = {
 //   accuracy: Location.Accuracy.High,
 //   timeInterval: 1000,
 //   distanceInterval: 1,
@@ -68,7 +68,7 @@ export default class CurrentGridTile extends Component {
   async watchLocation() {
     //console.log('getting location')
 
-    const { remove } = await Location.watchPositionAsync(LOCATION_OPTIONS, this.updateLocation);
+    const { remove } = await Location.watchPositionAsync(LOCATION_SETTINGS, this.updateLocation);
     this.setState({ removeLocation: remove });
   }
 
