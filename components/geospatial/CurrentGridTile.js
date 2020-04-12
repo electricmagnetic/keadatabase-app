@@ -31,7 +31,7 @@ export default class CurrentGridTile extends Component {
       gridTile: null,
     };
 
-    this.getLocation = this.getLocation.bind(this);
+    this.watchLocation = this.watchLocation.bind(this);
     this.updateLocation = this.updateLocation.bind(this);
     this.getGridTile = this.getGridTile.bind(this);
     this.checkLocationPermissions = this.checkLocationPermissions.bind(this);
@@ -51,8 +51,7 @@ export default class CurrentGridTile extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.hasPermission !== this.state.hasPermission) {
-      //if (this.state.hasPermission) this.setState({locationWatch: this.getLocation()});
-      this.getLocation();
+      this.watchLocation();
     }
 
     if (prevState.location !== this.state.location) {
@@ -66,7 +65,7 @@ export default class CurrentGridTile extends Component {
     this.setState({ location: location });
   }
 
-  async getLocation() {
+  async watchLocation() {
     //console.log('getting location')
 
     const { remove } = await Location.watchPositionAsync(LOCATION_OPTIONS, this.updateLocation);
