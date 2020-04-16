@@ -11,14 +11,9 @@ import tiles from '../../assets/geo/tiles.json';
 
 const LOCATION_SETTINGS = {
   accuracy: Location.Accuracy.High,
-  timeInterval: 30000,
+  timeInterval: 10000,
   distanceInterval: 10,
 };
-// const LOCATION_SETTINGS = {
-//   accuracy: Location.Accuracy.High,
-//   timeInterval: 1000,
-//   distanceInterval: 1,
-// };
 
 export default class CurrentGridTile extends Component {
   constructor(props) {
@@ -28,7 +23,6 @@ export default class CurrentGridTile extends Component {
       error: false,
       location: null,
       removeLocation: null,
-      gridTile: null,
     };
 
     this.watchLocation = this.watchLocation.bind(this);
@@ -55,7 +49,7 @@ export default class CurrentGridTile extends Component {
     }
 
     if (prevState.location !== this.state.location) {
-      this.setState({ gridTile: this.getGridTile() });
+      this.props.onGridTileChange(this.getGridTile());
     }
   }
 
@@ -97,7 +91,8 @@ export default class CurrentGridTile extends Component {
   }
 
   render() {
-    const { hasPermission, error, location, gridTile } = this.state;
+    const { hasPermission, error, location } = this.state;
+    const { gridTile } = this.props;
     const coordinates = location && location.coords;
     const gridTileId = gridTile && gridTile.id;
 
