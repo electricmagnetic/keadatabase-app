@@ -21,11 +21,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.electricmagnetic.keaapp",
-      "buildNumber": "0.0.2"
+      "buildNumber": "0.0.3"
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }
