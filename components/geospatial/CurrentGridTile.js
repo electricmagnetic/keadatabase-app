@@ -49,7 +49,10 @@ export default class CurrentGridTile extends Component {
     }
 
     if (prevState.location !== this.state.location) {
-      this.props.onGridTileChange(this.getGridTile());
+      // Only update gridTile in state if it has changed
+      const gridTile = this.getGridTile();
+
+      if (prevProps.gridTile !== gridTile) this.props.onGridTileChange(gridTile);
     }
   }
 
@@ -77,8 +80,8 @@ export default class CurrentGridTile extends Component {
 
   getGridTile() {
     //console.log('getting grid tile');
-
-    const coordinates = this.state.location && this.state.location.coords;
+    const { location } = this.state;
+    const coordinates = location && location.coords;
     const pointLocation = coordinates ? point([coordinates.longitude, coordinates.latitude]) : null;
 
     return tiles.features.reduce(

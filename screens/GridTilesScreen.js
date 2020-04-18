@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import GridTileMap from '../components/geospatial/GridTileMap';
+import GridTileFinder from '../components/geospatial/GridTileFinder';
 import { HeadingsText } from '../components/presentation/StyledText';
 
 const GridTilesScreen = () => (
   <View style={styles.container}>
-    <GridTileMap />
+    <GridTileFinder />
   </View>
 );
 

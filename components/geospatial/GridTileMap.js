@@ -11,7 +11,6 @@ export default class GridTileMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gridTile: null,
       region: {
         latitude: -43.983333,
         longitude: 170.45,
@@ -19,16 +18,22 @@ export default class GridTileMap extends Component {
         longitudeDelta: 6,
       },
     };
-    this.onGridTileChange = this.onGridTileChange.bind(this);
   }
 
-  onGridTileChange(gridTile) {
-    this.setState({ gridTile: gridTile });
-    const region = Object.assign({}, this.getCentroidLatLng(gridTile), {
-      latitudeDelta: 0.2,
-      longitudeDelta: 0.2,
-    });
-    this.setState({ region: region });
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.gridTile !== this.props.gridTile) {
+      const { gridTile } = this.props;
+
+      // Only update region if gridTile isn't null
+      if (gridTile) {
+        this.setState({
+          region: Object.assign({}, this.getCentroidLatLng(gridTile), {
+            latitudeDelta: 0.2,
+            longitudeDelta: 0.2,
+          }),
+        });
+      }
+    }
   }
 
   getPolygonLatLngs(gridTile) {
@@ -45,17 +50,18 @@ export default class GridTileMap extends Component {
     };
   }
 
+  getNeighbours(gridTile) {
+    return gridTile.properties.neighbours.map((neighbourId) =>
+      tiles.features.find(({ id }) => id === neighbourId)
+    );
+  }
+
   render() {
-    const { gridTile, region } = this.state;
-    const gridTileNeighbours =
-      gridTile &&
-      gridTile.properties.neighbours.map((neighbourId) =>
-        tiles.features.find(({ id }) => id === neighbourId)
-      );
+    const { region } = this.state;
+    const { gridTile } = this.props;
 
     return (
       <View style={styles.container}>
-        <CurrentGridTile gridTile={this.state.gridTile} onGridTileChange={this.onGridTileChange} />
         <MapView
           style={styles.map}
           region={region}
@@ -73,22 +79,21 @@ export default class GridTileMap extends Component {
               <Marker coordinate={this.getCentroidLatLng(gridTile)}>
                 <Text>{gridTile.id}</Text>
               </Marker>
+              {this.getNeighbours(gridTile).map((neighbour) => (
+                <React.Fragment key={neighbour.id}>
+                  <Polygon
+                    coordinates={this.getPolygonLatLngs(neighbour)}
+                    strokeColor="rgba(85,85,85,1)"
+                    fillColor="rgba(85,85,85,0.25)"
+                    strokeWidth={0.5}
+                  />
+                  <Marker coordinate={this.getCentroidLatLng(neighbour)}>
+                    <Text>{neighbour.id}</Text>
+                  </Marker>
+                </React.Fragment>
+              ))}
             </>
           )}
-          {gridTileNeighbours &&
-            gridTileNeighbours.map((neighbour) => (
-              <React.Fragment key={neighbour.id}>
-                <Polygon
-                  coordinates={this.getPolygonLatLngs(neighbour)}
-                  strokeColor="rgba(85,85,85,1)"
-                  fillColor="rgba(85,85,85,0.25)"
-                  strokeWidth={0.5}
-                />
-                <Marker coordinate={this.getCentroidLatLng(neighbour)}>
-                  <Text>{neighbour.id}</Text>
-                </Marker>
-              </React.Fragment>
-            ))}
         </MapView>
       </View>
     );
