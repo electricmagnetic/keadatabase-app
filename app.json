@@ -8,7 +8,6 @@
     "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "keadatabase",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -25,7 +24,7 @@
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 4
+      "versionCode": 5
     }
   }
 }
