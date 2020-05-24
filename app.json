@@ -24,7 +24,7 @@
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 6
+      "versionCode": 7
     }
   }
 }
