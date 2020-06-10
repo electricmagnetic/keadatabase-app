@@ -5,7 +5,12 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'mobx-react';
+import { AsyncStorage } from 'react-native';
+import { AsyncTrunk, date } from 'mobx-sync';
+import 'mobx-react-lite/batchingForReactNative';
 
+import store from './store/store';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 
 const Stack = createStackNavigator();
@@ -47,17 +52,24 @@ const App = (props) => {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <Provider rootStore={store}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+            <Stack.Navigator>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </Provider>
     );
   }
 };
+
+const trunk = new AsyncTrunk(store, { storage: AsyncStorage });
+trunk.init().then(() => {
+  store.storeLoaded = true;
+});
 
 const styles = StyleSheet.create({
   container: {
