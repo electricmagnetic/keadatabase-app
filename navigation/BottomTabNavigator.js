@@ -1,64 +1,46 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import TabBarIcon from '../components/presentation/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import GridTilesScreen from '../screens/GridTilesScreen';
-import BirdsScreen from '../screens/BirdsScreen';
-import MenuScreen from '../screens/MenuScreen';
+
+import HomeStackScreen from './HomeStack';
+import SurveyStackScreen from './SurveyStack';
+import BirdStackScreen from './BirdStack';
+import MenuStackScreen from './MenuStack';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Home':
-      return 'Home';
-    case 'Birds':
-      return 'Search Birds';
-    case 'Survey':
-      return 'Survey Map';
-    case 'Menu':
-      return 'Main Menu';
-  }
-}
-
 const BottomTabNavigator = ({ navigation, route }) => {
-  // Set the header title on the parent stack navigator depending on the
-  // currently active tab. Learn more in the documentation:
-  // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
-
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="HomeStack"
+        component={HomeStackScreen}
         options={{
           title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-home" />,
         }}
       />
       <BottomTab.Screen
-        name="Survey"
-        component={GridTilesScreen}
+        name="SurveyStack"
+        component={SurveyStackScreen}
         options={{
           title: 'Survey Map',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map" />,
         }}
       />
       <BottomTab.Screen
-        name="Birds"
-        component={BirdsScreen}
+        name="BirdStack"
+        component={BirdStackScreen}
         options={{
-          title: 'Birds',
+          title: 'Search Birds',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-search" />,
         }}
       />
       <BottomTab.Screen
-        name="Menu"
-        component={MenuScreen}
+        name="MenuStack"
+        component={MenuStackScreen}
         options={{
           title: 'Menu',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
