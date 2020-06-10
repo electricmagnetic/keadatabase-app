@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import CurrentGridTile from './CurrentGridTile';
 import GridTileMap from './GridTileMap';
 
-export default class GridTileFinder extends Component {
+class GridTileFinder extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,11 +19,12 @@ export default class GridTileFinder extends Component {
 
   render() {
     const { gridTile } = this.state;
+    const { showMap } = this.props;
 
     return (
       <View style={styles.container}>
         <CurrentGridTile gridTile={gridTile} onGridTileChange={this.onGridTileChange} />
-        <GridTileMap gridTile={gridTile} />
+        {showMap && <GridTileMap gridTile={gridTile} />}
       </View>
     );
   }
@@ -34,3 +35,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+GridTileFinder.defaultProps = {
+  showMap: true,
+};
+
+export default GridTileFinder;

@@ -1,78 +1,64 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
 
-const OptionButton = ({ icon, label, onPress, isLastOption }) => (
-  <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-    <View style={{ flexDirection: 'row' }}>
-      <View style={styles.optionIconContainer}>
-        <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-      </View>
-      <View style={styles.optionTextContainer}>
-        <Text style={styles.optionText}>{label}</Text>
-      </View>
-    </View>
-  </RectButton>
-);
+import {
+  Container,
+  Content,
+  List,
+  ListItem,
+  Text,
+  Left,
+  Body,
+  Button,
+  Icon,
+  Separator,
+} from 'native-base';
 
 const MenuScreen = () => (
-  <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-    <Text style={[styles.option, { fontWeight: 'bold', paddingBottom: 5 }]}>Online Resources</Text>
-    <OptionButton
-      icon="md-book"
-      label="Kea Database"
-      onPress={() => WebBrowser.openBrowserAsync('https://keadatabase.nz')}
-    />
-
-    <OptionButton
-      icon="md-grid"
-      label="Kea Survey Tool"
-      onPress={() => WebBrowser.openBrowserAsync('https://survey.keadatabase.nz')}
-    />
-
-    <OptionButton
-      icon="md-map"
-      label="Kea Map"
-      onPress={() => WebBrowser.openBrowserAsync('https://map.keadatabase.nz')}
-    />
-
-    <Text style={[styles.option, { marginTop: 20, borderWidth: 0 }]}>
-      <Text style={{ fontWeight: 'bold' }}>Kea App Beta</Text>
-      {'\n'}
-      By ElectricMagnetic
-    </Text>
-  </ScrollView>
+  <Container>
+    <Content>
+      <List>
+        <Separator bordered>
+          <Text>Online Resources</Text>
+        </Separator>
+        <ListItem
+          icon
+          button={true}
+          onPress={() => WebBrowser.openBrowserAsync('https://keadatabase.nz')}
+        >
+          <Left>
+            <Icon ios="ios-filing" android="md-filing" />
+          </Left>
+          <Body>
+            <Text>Kea Database</Text>
+          </Body>
+        </ListItem>
+        <ListItem
+          icon
+          button={true}
+          onPress={() => WebBrowser.openBrowserAsync('https://survey.keadatabase.nz')}
+        >
+          <Left>
+            <Icon ios="ios-grid" android="md-grid" />
+          </Left>
+          <Body>
+            <Text>Kea Survey Tool</Text>
+          </Body>
+        </ListItem>
+        <Separator bordered>
+          <Text>About</Text>
+        </Separator>
+        <ListItem last>
+          <Text>
+            <Text style={{ fontWeight: 'bold' }}>Kea App</Text>
+            {'\n'}
+            Version: {Constants.nativeBuildVersion} &middot; By ElectricMagnetic
+          </Text>
+        </ListItem>
+      </List>
+    </Content>
+  </Container>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fafafa',
-  },
-  contentContainer: {
-    paddingTop: 15,
-  },
-  optionIconContainer: {
-    marginRight: 12,
-  },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
-  },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
-  },
-});
 
 export default MenuScreen;
