@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import TabBarIcon from '../components/presentation/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import GridTilesScreen from '../screens/GridTilesScreen';
+import BirdsScreen from '../screens/BirdsScreen';
 import MenuScreen from '../screens/MenuScreen';
 
 const BottomTab = createBottomTabNavigator();
@@ -14,6 +15,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Home':
       return 'Home';
+    case 'Birds':
+      return 'Search Birds';
     case 'Survey':
       return 'Survey Map';
     case 'Menu':
@@ -43,6 +46,14 @@ const BottomTabNavigator = ({ navigation, route }) => {
         options={{
           title: 'Survey Map',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Birds"
+        component={BirdsScreen}
+        options={{
+          title: 'Birds',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-search" />,
         }}
       />
       <BottomTab.Screen
