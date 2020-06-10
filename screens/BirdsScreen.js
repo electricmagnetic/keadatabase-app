@@ -1,33 +1,39 @@
 import * as React from 'react';
-import { FlatList } from 'react-native';
-import { Container, Header, Content, ListItem, Text } from 'native-base';
+import { FlatList, RefreshControl } from 'react-native';
+import { Container, Header, Content, ListItem, Text, Button } from 'native-base';
+import { inject, observer } from 'mobx-react';
 
 import { HeadingsText } from '../components/presentation/StyledText';
 
-import tempBirds from '../assets/geo/tempBirds.json';
-
 function Item({ item }) {
   return (
-    <ListItem key={item.slug}>
+    <ListItem>
       <Text>
-        {item.bird && item.bird.name} ({item.name})
+        {item.name} ({item.band_combo})
       </Text>
     </ListItem>
   );
 }
 
-const BirdsScreen = () => (
-  <Container>
-    <FlatList
-      data={tempBirds.results}
-      renderItem={({ item }) => <Item item={item} />}
-      keyExtractor={(item) => item.slug}
-    />
-  </Container>
-);
+const BirdsScreen = (props) => {
+  const { birds, fetchBirds, birdsStatus } = props.store;
+
+  return (
+    <Container>
+      <FlatList
+        data={birds}
+        keyExtractor={(item) => item.slug}
+        renderItem={({ item }) => <Item item={item} />}
+        ListEmptyComponent={<Text>No birds loaded. Pull down to refresh.</Text>}
+        onRefresh={fetchBirds}
+        refreshing={birdsStatus === 'pending'}
+      />
+    </Container>
+  );
+};
 
 BirdsScreen.navigationOptions = {
   header: null,
 };
 
-export default BirdsScreen;
+export default inject('store')(observer(BirdsScreen));
