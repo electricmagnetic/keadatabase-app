@@ -26,15 +26,15 @@ const BottomTabNavigator = ({ navigation, route }) => {
         name="SurveyStack"
         component={SurveyStackScreen}
         options={{
-          title: 'Survey Map',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-map" />,
+          title: 'Survey',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-grid" />,
         }}
       />
       <BottomTab.Screen
         name="BirdStack"
         component={BirdStackScreen}
         options={{
-          title: 'Search Birds',
+          title: 'Birds',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-search" />,
         }}
       />

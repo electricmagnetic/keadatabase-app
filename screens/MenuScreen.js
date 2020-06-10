@@ -53,7 +53,7 @@ const MenuScreen = () => (
           <Text>
             <Text style={{ fontWeight: 'bold' }}>Kea App</Text>
             {'\n'}
-            Version: {Constants.nativeBuildVersion} &middot; By ElectricMagnetic
+            By ElectricMagnetic &middot; Version: {Constants.nativeBuildVersion}
           </Text>
         </ListItem>
       </List>
