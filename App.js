@@ -6,6 +6,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'mobx-react';
+import { AsyncStorage } from 'react-native';
+import { AsyncTrunk, date } from 'mobx-sync';
+import 'mobx-react-lite/batchingForReactNative';
 
 import store from './store/store';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
@@ -49,7 +52,7 @@ const App = (props) => {
     return null;
   } else {
     return (
-      <Provider store={store}>
+      <Provider rootStore={store}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
@@ -62,6 +65,11 @@ const App = (props) => {
     );
   }
 };
+
+const trunk = new AsyncTrunk(store, { storage: AsyncStorage });
+trunk.init().then(() => {
+  store.storeLoaded = true;
+});
 
 const styles = StyleSheet.create({
   container: {

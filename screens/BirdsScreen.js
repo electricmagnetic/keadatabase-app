@@ -16,7 +16,8 @@ function Item({ item }) {
 }
 
 const BirdsScreen = (props) => {
-  const { birds, fetchBirds, birdsStatus } = props.store;
+  const { birds, fetchBirds, status } = props.rootStore.birdsStore;
+  const { storeLoaded } = props.rootStore;
 
   return (
     <Container>
@@ -26,7 +27,7 @@ const BirdsScreen = (props) => {
         renderItem={({ item }) => <Item item={item} />}
         ListEmptyComponent={<Text>No birds loaded. Pull down to refresh.</Text>}
         onRefresh={fetchBirds}
-        refreshing={birdsStatus === 'pending'}
+        refreshing={status === 'pending'}
       />
     </Container>
   );
@@ -36,4 +37,4 @@ BirdsScreen.navigationOptions = {
   header: null,
 };
 
-export default inject('store')(observer(BirdsScreen));
+export default inject('rootStore')(observer(BirdsScreen));
