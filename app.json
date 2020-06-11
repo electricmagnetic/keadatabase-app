@@ -19,7 +19,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.electricmagnetic.keaapp",
-      "buildNumber": "0.0.6"
+      "buildNumber": "0.0.7",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Enables the Kea App to use your location for kea observations and surveys"
+      }
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
