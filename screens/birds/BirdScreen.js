@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { ScrollView, Dimensions } from 'react-native';
+import HTML from 'react-native-render-html';
 import { inject, observer } from 'mobx-react';
 
 const BirdScreen = (props) => {
@@ -10,42 +11,47 @@ const BirdScreen = (props) => {
   const { slug } = route.params;
 
   const bird = birds.find((bird) => bird.slug === slug);
+  const birdExtended = bird.bird_extended || null;
+
+  const htmlContent = `
+      ${
+        birdExtended && birdExtended.profile_picture
+          ? `<p><img src=${birdExtended.profile_picture.large} /></p>`
+          : ''
+      }
+      <div style="padding: 5%;">
+        <div>
+          <h1>${bird.name}</h1>
+          <dl>
+            <dd>${bird.status} ${bird.sex} ${bird.get_life_stage} &middot; ${bird.study_area}</dd>
+            <dd>${bird.primary_band} &middot; ${bird.band_combo}</dd>
+          </dl>
+        </div>
+        <div>
+          ${birdExtended && birdExtended.description ? `<p>${birdExtended.description}</p>` : ''}
+          ${
+            birdExtended && birdExtended.profile_picture_attribution
+              ? `<p>Photo: ${birdExtended.profile_picture_attribution}</p>`
+              : ''
+          }
+        </div>
+      </div>
+  `;
 
   return (
-    <View style={styles.container}>
-      <Text>Bird: {slug}</Text>
-      <Text>Name: {bird.name}</Text>
-      <Text>Status: {bird.status}</Text>
-      <Text>Sex: {bird.sex}</Text>
-      <Text>Life Stage: {bird.life_stage}</Text>
-      <Text>Study Area: {bird.study_area}</Text>
-      <Text>Primary Band: {bird.primary_band}</Text>
-      <Text>Band Combo {bird.band_combo}</Text>
-      {bird.bird_extended && (
-        <>
-          <Text>Description: {bird.bird_extended.description}</Text>
-          <Image
-            source={{ uri: bird.bird_extended.profile_picture.thumbnail }}
-            style={{ width: 350, height: 250 }}
-          />
-          <Text>Profile Picture: {bird.bird_extended.profile_picture_attribution}</Text>
-        </>
-      )}
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      <HTML
+        html={htmlContent}
+        imagesMaxWidth={Dimensions.get('window').width}
+        baseFontStyle={{ fontSize: 16 }}
+      />
+    </ScrollView>
   );
 };
 
 BirdScreen.navigationOptions = {
   header: null,
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-});
 
 BirdScreen.propTypes = {
   route: PropTypes.shape({

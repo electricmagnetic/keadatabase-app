@@ -11,7 +11,6 @@ class BirdsStore {
   @observable status = 'none';
 
   @action fetchBirds = () => {
-    this.birds = [];
     this.status = 'pending';
     fetch(`https://data.keadatabase.nz/birds/?page_size=10000&format=json`)
       .then((response) => response.json())

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
-import { Container, Header, Content, ListItem, Text, Button } from 'native-base';
+import { StyleSheet, View, FlatList, RefreshControl } from 'react-native';
+import { Icon, Container, Header, Content, ListItem, Text, Button } from 'native-base';
 import { inject, observer } from 'mobx-react';
 
 import { HeadingsText } from '../../components/presentation/StyledText';
@@ -28,9 +28,26 @@ class Item extends Component {
   }
 }
 
+const ListEmpty = (props) => {
+  const { birds, fetchBirds, status } = props.rootStore.birdsStore;
+  const isPending = status === 'pending';
+
+  return (
+    <View style={styles.listEmpty}>
+      {!isPending && (
+        <Button iconLeft primary onPress={fetchBirds}>
+          <Icon ios="ios-refresh" android="md-refresh" />
+          <Text>Fetch Birds</Text>
+        </Button>
+      )}
+    </View>
+  );
+};
+
 const BirdsScreen = (props) => {
   const { birds, fetchBirds, status } = props.rootStore.birdsStore;
   const { navigation } = props;
+  const isPending = status === 'pending';
   /*const { storeLoaded } = props.rootStore;*/
 
   return (
@@ -39,9 +56,9 @@ const BirdsScreen = (props) => {
         data={birds}
         keyExtractor={(item) => item.slug}
         renderItem={({ item }) => <Item item={item} navigation={navigation} />}
-        ListEmptyComponent={<Text>No birds loaded. Pull down to refresh.</Text>}
+        ListEmptyComponent={<ListEmpty {...props} />}
         onRefresh={fetchBirds}
-        refreshing={status === 'pending'}
+        refreshing={isPending}
       />
     </Container>
   );
@@ -50,5 +67,12 @@ const BirdsScreen = (props) => {
 BirdsScreen.navigationOptions = {
   header: null,
 };
+
+const styles = StyleSheet.create({
+  listEmpty: {
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+});
 
 export default inject('rootStore')(observer(BirdsScreen));
