@@ -19,11 +19,11 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.electricmagnetic.keaapp",
-      "buildNumber": "0.0.5"
+      "buildNumber": "0.0.6"
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 10,
+      "versionCode": 11,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC-s5X6sRd5fBrXJIQ0gmTP1Rq_One7gug"
