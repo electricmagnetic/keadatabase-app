@@ -8,7 +8,7 @@ const BirdStack = createStackNavigator();
 
 const BirdStackScreen = () => (
   <BirdStack.Navigator>
-    <BirdStack.Screen name="Birds" component={BirdsScreen} />
+    <BirdStack.Screen name="Birds" component={BirdsScreen} options={{ headerShown: false }} />
     <BirdStack.Screen name="Bird" component={BirdScreen} />
   </BirdStack.Navigator>
 );
