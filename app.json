@@ -19,14 +19,14 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.electricmagnetic.keaapp",
-      "buildNumber": "0.0.7",
+      "buildNumber": "0.0.8",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Enables the Kea App to use your location for kea observations and surveys"
       }
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 11,
+      "versionCode": 12,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC-s5X6sRd5fBrXJIQ0gmTP1Rq_One7gug"
