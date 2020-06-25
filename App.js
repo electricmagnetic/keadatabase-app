@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import { Provider } from 'mobx-react';
-import { AsyncStorage } from 'react-native';
-import { AsyncTrunk, date } from 'mobx-sync';
 import 'mobx-react-lite/batchingForReactNative';
 
 import store from './store/store';
@@ -63,11 +64,6 @@ const App = (props) => {
     );
   }
 };
-
-const trunk = new AsyncTrunk(store, { storage: AsyncStorage });
-trunk.init().then(() => {
-  store.storeLoaded = true;
-});
 
 const styles = StyleSheet.create({
   container: {

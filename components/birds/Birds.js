@@ -75,32 +75,27 @@ class Birds extends Component {
     const { birds, fetchBirds, status } = this.props.rootStore.birdsStore;
     const { navigation } = this.props;
     const isPending = status === 'pending';
-    const { storeLoaded } = this.props.rootStore;
 
     return (
       <Container>
-        {storeLoaded && (
-          <>
-            <Header searchBar>
-              <Item>
-                <Icon ios="ios-search" android="md-search" />
-                <Input
-                  placeholder="Search Birds"
-                  onChangeText={(text) => this.onChangeText(text)}
-                  value={this.state.text}
-                />
-              </Item>
-            </Header>
-            <FlatList
-              data={this.filterBirds(birds)}
-              keyExtractor={(item) => item.slug}
-              renderItem={({ item }) => <BirdListItem item={item} navigation={navigation} />}
-              ListEmptyComponent={<ListEmpty {...this.props} />}
-              onRefresh={fetchBirds}
-              refreshing={isPending}
+        <Header searchBar>
+          <Item>
+            <Icon ios="ios-search" android="md-search" />
+            <Input
+              placeholder="Search Birds"
+              onChangeText={(text) => this.onChangeText(text)}
+              value={this.state.text}
             />
-          </>
-        )}
+          </Item>
+        </Header>
+        <FlatList
+          data={this.filterBirds(birds)}
+          keyExtractor={(item) => item.slug}
+          renderItem={({ item }) => <BirdListItem item={item} navigation={navigation} />}
+          ListEmptyComponent={<ListEmpty {...this.props} />}
+          onRefresh={fetchBirds}
+          refreshing={isPending}
+        />
       </Container>
     );
   }

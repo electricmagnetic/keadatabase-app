@@ -1,5 +1,4 @@
 import { runInAction, decorate, observable, action } from 'mobx';
-import { ignore } from 'mobx-sync';
 
 class BirdsStore {
   constructor(rootStore) {
@@ -32,8 +31,6 @@ class RootStore {
   constructor() {
     this.birdsStore = new BirdsStore(this);
   }
-
-  @ignore @observable storeLoaded = false;
 }
 
 export default new RootStore();
