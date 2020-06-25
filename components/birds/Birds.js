@@ -31,7 +31,7 @@ class BirdListItem extends Component {
 }
 
 const ListEmpty = (props) => {
-  const { birds, fetchBirds, status } = props.rootStore.birdsStore;
+  const { birds, fetchBirds, status } = props.birdsStore;
   const isPending = status === 'pending';
   const isEmpty = birds.length === 0;
 
@@ -72,7 +72,7 @@ class Birds extends Component {
   }
 
   render() {
-    const { birds, fetchBirds, status } = this.props.rootStore.birdsStore;
+    const { birds, fetchBirds, status } = this.props.birdsStore;
     const { navigation } = this.props;
     const isPending = status === 'pending';
 
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default inject('rootStore')(observer(Birds));
+export default inject('birdsStore')(observer(Birds));

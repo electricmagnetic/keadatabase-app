@@ -1,13 +1,10 @@
 import { runInAction, decorate, observable, action } from 'mobx';
+import { persist } from 'mobx-persist';
 
 class BirdsStore {
-  constructor(rootStore) {
-    this.rootStore = rootStore;
-  }
+  @persist('list') @observable birds = [];
 
-  @observable birds = [];
-
-  @observable status = 'none';
+  @persist @observable status = 'none';
 
   @action fetchBirds = () => {
     this.status = 'pending';
@@ -27,10 +24,4 @@ class BirdsStore {
   };
 }
 
-class RootStore {
-  constructor() {
-    this.birdsStore = new BirdsStore(this);
-  }
-}
-
-export default new RootStore();
+export const birdsStore = new BirdsStore();

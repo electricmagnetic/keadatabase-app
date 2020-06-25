@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
@@ -9,9 +9,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Provider } from 'mobx-react';
+import { create } from 'mobx-persist';
 import 'mobx-react-lite/batchingForReactNative';
 
-import store from './store/store';
+import { birdsStore } from './store/stores';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 
 const Stack = createStackNavigator();
@@ -37,6 +38,10 @@ const App = (props) => {
           ...Ionicons.font,
           'zilla-slab': require('./assets/fonts/ZillaSlab-SemiBold.ttf'),
         });
+
+        // Hydrate mobx store
+        const hydrate = create({ storage: AsyncStorage, jsonify: true });
+        await hydrate('birds', birdsStore);
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
@@ -53,7 +58,7 @@ const App = (props) => {
     return null;
   } else {
     return (
-      <Provider rootStore={store}>
+      <Provider birdsStore={birdsStore}>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           <NavigationContainer ref={containerRef} initialState={initialNavigationState}>

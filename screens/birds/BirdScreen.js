@@ -4,8 +4,8 @@ import { inject, observer } from 'mobx-react';
 
 import Bird from '../../components/birds/Bird';
 
-const BirdScreen = ({ route, rootStore }) => {
-  const { birds } = rootStore.birdsStore;
+const BirdScreen = ({ route, birdsStore }) => {
+  const { birds } = birdsStore;
   const { slug } = route.params;
 
   const bird = birds.find((bird) => bird.slug === slug);
@@ -21,4 +21,4 @@ BirdScreen.propTypes = {
   }),
 };
 
-export default inject('rootStore')(observer(BirdScreen));
+export default inject('birdsStore')(observer(BirdScreen));
