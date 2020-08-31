@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import MapView, { UrlTile, Marker, Polygon } from 'react-native-maps';
+import MapView, { Marker, Polygon, Geojson } from 'react-native-maps';
 
 import CurrentGridTile from './CurrentGridTile';
 
 import tiles from '../../assets/geo/tiles.json';
+import tilesOutline from '../../assets/geo/tilesOutline.json';
 
 export default class GridTileMap extends Component {
   constructor(props) {
@@ -69,6 +70,11 @@ export default class GridTileMap extends Component {
           minZoomLevel={4}
           maxZoomLevel={15}
         >
+          <Geojson
+            geojson={tilesOutline}
+            strokeColor="rgba(0,0,0,1)"
+            fillColor="rgba(0,0,0,0.05)"
+          />
           {gridTile && (
             <>
               <Polygon
