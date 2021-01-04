@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View, AsyncStorage } from 'react-native';
 
-import { SplashScreen } from 'expo';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -10,7 +10,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Provider } from 'mobx-react';
 import { create } from 'mobx-persist';
-import 'mobx-react-lite/batchingForReactNative';
 
 import { birdsStore } from './store/stores';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
@@ -26,7 +25,7 @@ const App = (props) => {
   React.useEffect(() => {
     async function loadResourcesAndDataAsync() {
       try {
-        SplashScreen.preventAutoHide();
+        SplashScreen.preventAutoHideAsync();
 
         // Load our initial navigation state
         setInitialNavigationState();
@@ -47,7 +46,7 @@ const App = (props) => {
         console.warn(e);
       } finally {
         setLoadingComplete(true);
-        SplashScreen.hide();
+        SplashScreen.hideAsync();
       }
     }
 

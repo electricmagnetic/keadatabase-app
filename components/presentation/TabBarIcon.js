@@ -6,8 +6,8 @@ import Colors from '../../constants/Colors';
 const TabBarIcon = (props) => (
   <Ionicons
     name={props.name}
-    size={30}
-    style={{ marginBottom: -3 }}
+    size={25}
+    style={{ marginBottom: -5 }}
     color={props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
   />
 );

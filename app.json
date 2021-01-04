@@ -4,7 +4,7 @@
     "slug": "keadatabase-app",
     "privacy": "public",
     "platforms": ["ios", "android"],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -19,14 +19,14 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.electricmagnetic.keaapp",
-      "buildNumber": "0.0.8",
+      "buildNumber": "0.0.9",
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "Enables the Kea App to use your location for kea observations and surveys"
       }
     },
     "android": {
       "package": "com.electricmagnetic.keaapp",
-      "versionCode": 12,
+      "versionCode": 13,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyC-s5X6sRd5fBrXJIQ0gmTP1Rq_One7gug"

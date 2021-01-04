@@ -51,7 +51,7 @@ const MenuScreen = (props) => (
           }
         >
           <Left>
-            <Icon ios="ios-filing" android="md-filing" />
+            <Icon ios="ios-server" android="md-server" />
           </Left>
           <Body>
             <Text>Kea Database</Text>
